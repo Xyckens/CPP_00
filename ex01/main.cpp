@@ -41,15 +41,16 @@ void	PhoneBook::add(int index)
 		std::cin.clear();
 	}
 	i = 0;
-	while (i < 8 && !PhoneBook::cont[i].first.empty())
-		i++;
-	if (i == 8)
-		i = 0;
-	PhoneBook::cont[i].first = array[0];
-	PhoneBook::cont[i].last = array[1];
-	PhoneBook::cont[i].nick = array[2];
-	PhoneBook::cont[i].number = array[3];
-	PhoneBook::cont[i].secret = array[4];
+	std::cout << "index" << index % 8 << std::endl;
+	if (index % 8 == 0)
+		index = 8;
+	else
+		index = index % 8;
+	PhoneBook::cont[index - 1].first = array[0];
+	PhoneBook::cont[index - 1].last = array[1];
+	PhoneBook::cont[index - 1].nick = array[2];
+	PhoneBook::cont[index - 1].number = array[3];
+	PhoneBook::cont[index - 1].secret = array[4];
 	std::cout << "Done.\nPlease choose one: ADD, SEARCH or EXIT\n";
 }
 
