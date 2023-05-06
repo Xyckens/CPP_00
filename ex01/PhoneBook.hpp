@@ -17,7 +17,7 @@
 
 class PhoneBook {
 public:
-	void	add();
+	void	add(int index);
 	void	search(PhoneBook phone);
 private:
 	Contact cont[8];

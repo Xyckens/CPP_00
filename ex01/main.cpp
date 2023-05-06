@@ -12,7 +12,7 @@
 
 #include "ex01.h"
 
-void	PhoneBook::add(void)
+void	PhoneBook::add(int index)
 {
 	std::string	info;
 	std::string	array[5];
@@ -27,14 +27,18 @@ void	PhoneBook::add(void)
 	for (i = 0; i < 5; i++)
 	{
 		std::cout << output[i];
-		std::cin >> info;
-		if (info.empty() || info == "\n")
+		if (i == 4)
+			std::getline(std::cin >> std::ws, info);
+		else
+			std::cin >> info;
+		if (info.empty() || info[0] == '\n')
 		{
 			std::cout << "A saved contact can’t have empty fields.\n";
 			return ;
 		}
 		array[i] = info;
 		info = "\0";
+		std::cin.clear();
 	}
 	i = 0;
 	while (i < 8 && !PhoneBook::cont[i].first.empty())
@@ -52,30 +56,34 @@ void	PhoneBook::add(void)
 void	PhoneBook::search(PhoneBook phone)
 {
 	int	i = 0;
-	int	nbr;
+	int	nbr = 0;
+	std::string big;
 
 	std::cout << "     INDEX| FIRSTNAME|  LASTNAME|  NICKNAME\n";
-	while (!phone.cont[i].first.empty())
+	while (i < 8 && !phone.cont[i].first.empty())
 	{
 		std::cout << std::setw(10) << i + 1 << "|";
-		if (std::strlen(phone.cont[i].first.c_str()) >= 9)
+		if (phone.cont[i].first.length() >= 9)
 		{
-			std::cout << std::string(phone.cont[i].first.begin(), phone.cont[i].first.begin() + 9);
+			big = phone.cont[i].first;
+			std::cout << std::string(big.begin(), big.begin() + 9);
 			std::cout << '.' << "|";
 		}
 		else
 			std::cout << std::setw(10) << phone.cont[i].first << "|";
-		if (std::strlen(phone.cont[i].last.c_str()) >= 9)
+		if (phone.cont[i].last.length() >= 9)
 		{
-			std::cout << std::string(phone.cont[i].last.begin(), phone.cont[i].last.begin() + 9);
+			big = phone.cont[i].last;
+			std::cout << std::string(big.begin(), big.begin() + 9);
 			std::cout << '.' << "|";
 		}
 		else
 			std::cout << std::setw(10) << phone.cont[i].last << "|";
-		if (std::strlen(phone.cont[i].nick.c_str()) >= 9)
+		if (phone.cont[i].nick.length() >= 9)
 		{
-			std::cout << std::string(phone.cont[i].nick.begin(), phone.cont[i].nick.begin() + 9);
-			std::cout << '.' << "|";
+			big = phone.cont[i].nick;
+			std::cout << std::string(big.begin(), big.begin() + 9);
+			std::cout << '.' << std::endl;
 		}
 		else
 			std::cout << std::setw(10) << phone.cont[i].nick << std::endl;
@@ -83,26 +91,27 @@ void	PhoneBook::search(PhoneBook phone)
 	}
 	std::cout << "Choose the index you want to expand. \n";
 	std::cin >> nbr;
-	if (nbr >= 1 && nbr >= i)
+	if (!std::cin.eof() && (nbr < 1 || nbr > i))
+	{
+		std::cout << "Invalid choice!\n";
+		PhoneBook::search(phone);
+	}
+	else if (nbr >= 1 && nbr <= i)
 	{
 		std::cout << phone.cont[nbr - 1].first << std::endl;
 		std::cout << phone.cont[nbr - 1].last << std::endl;
 		std::cout << phone.cont[nbr - 1].nick << std::endl;
 		std::cout << phone.cont[nbr - 1].number << std::endl;
 		std::cout << phone.cont[nbr - 1].secret << std::endl;
+		std::cout << "Done.\nPlease choose one: ADD, SEARCH or EXIT\n";
 	}
-	else
-	{
-		std::cout << "Invalid choice!\n";
-		//PhoneBook::search(phone);
-	}
-	std::cout << "Done.\nPlease choose one: ADD, SEARCH or EXIT\n";
 }
 
 int	main(void)
 {
 	std::string option;
 	PhoneBook phone;
+	int	i = 0;
 
 	std::cout << "Welcome to the Phonebook! \n";
 	std::cout << "Please choose one: ADD, SEARCH or EXIT" << std::endl;
@@ -110,7 +119,7 @@ int	main(void)
 	{
 		std::cout << "You selected \"" << option << "\".\n";
 		if (option == "ADD")
-			phone.add();
+			phone.add(++i);
 		else if (option == "SEARCH")
 			phone.search(phone);
 		else if (option == "EXIT")

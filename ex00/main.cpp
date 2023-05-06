@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Contact.hpp                                        :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fvieira <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/05 19:37:55 by fvieira           #+#    #+#             */
-/*   Updated: 2023/05/05 19:37:57 by fvieira          ###   ########.fr       */
+/*   Created: 2023/05/05 19:37:19 by fvieira           #+#    #+#             */
+/*   Updated: 2023/05/05 19:37:21 by fvieira          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CONTACT_HPP
-# define CONTACT_HPP
+#include <iostream>
 
-class Contact {
-	public:
-	int			index;
-	std::string	first;
-	std::string	last;
-	std::string	nick;
-	std::string	number;
-	std::string	secret;
-};
 
-#endif
+int	main(int argc, char **argv)
+{
+	
+	if (argc == 1)
+		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << std::endl;
+	else
+	{
+		for (int i = 1; argv[i]; i++)
+			for (int j = 0; argv[i][j]; j++)
+				std::cout << (char) std::toupper(argv[i][j]);
+	}
+	return (0);
+}
