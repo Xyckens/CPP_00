@@ -10,16 +10,15 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ex01
+NAME = ex02
 
 CC = c++
 
 C_FLAGS = -Wall -Werror -Wextra -std=c++98
 
-#SRC = PhoneBook.cpp \
-#	Contact.cpp
 
-SRC = main.cpp
+SRC = Account.cpp \
+	tests.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
@@ -35,8 +34,5 @@ fclean: clean
 	rm -rf $(NAME)
 
 re: fclean all
-
-run: re
-	valgrind ./ex01
 
 .SILENT:
