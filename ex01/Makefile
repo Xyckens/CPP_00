@@ -16,10 +16,8 @@ CC = c++
 
 C_FLAGS = -Wall -Werror -Wextra -std=c++98
 
-#SRC = PhoneBook.cpp \
-#	Contact.cpp
-
-SRC = main.cpp
+SRC = main.cpp \
+	PhoneBook.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
